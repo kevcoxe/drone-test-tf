@@ -32,12 +32,8 @@ steps:
         - validate
         - plan
     environment:
-      DIGITALOCEAN_TOKEN:
-        from_secret: digitalocean_token 
-      HCLOUD_TOKEN:
-        from_secret: hcloud_token
-      CLOUDFLARE_API_TOKEN:
-        from_secret: cloudflare_api_token
+      TF_VAR_tf_backup_infra_state_bucket_name:
+        from_secret: s3_bucket_name
     when:
       event:
       - pull_request
