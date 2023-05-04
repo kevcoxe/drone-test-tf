@@ -3,4 +3,8 @@ repos:
   rev: v1.78.0 # Get the latest from: https://github.com/antonbabenko/pre-commit-terraform/releases
   hooks:
     - id: terraform_fmt
+      args:
+        # - --args=-no-color
+        - --args=-diff
+        - --args=-write=true
     - id: terraform_docs
