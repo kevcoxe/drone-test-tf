@@ -1,11 +1,75 @@
 kind: pipeline
-type: docker
 name: default
+type: docker
+
+trigger:
+  branch:
+    - main
 
 steps:
-  - name: terraform
-    image: jmccann/drone-terraform:5
+  - name: Terraform FMT PR
+    image: jmccann/drone-terraform:latest
     settings:
-      plan: false
-      vars:
-        tf_backup_infra_state_bucket_name: kevcoxe-test-drone
+      actions:
+        - fmt
+      fmt_options:
+        write: false
+        diff: true
+        check: true
+    when:
+      event:
+      - pull_request
+
+  - name: Terraform Plan
+    image: jmccann/drone-terraform:latest
+    settings:
+      actions:
+        - validate
+        - plan
+    environment:
+      DIGITALOCEAN_TOKEN:
+        from_secret: digitalocean_token 
+      HCLOUD_TOKEN:
+        from_secret: hcloud_token
+      CLOUDFLARE_API_TOKEN:
+        from_secret: cloudflare_api_token
+    when:
+      event:
+      - pull_request
+
+  # - name: Terraform FMT
+  #   image: jmccann/drone-terraform:latest
+  #   settings:
+  #     actions:
+  #       - fmt
+  #     fmt_options:
+  #       write: false
+  #       diff: true
+  #       check: true
+  #   when:
+  #     branch:
+  #     - main
+  #     event:
+  #     - push
+  #     - tag
+
+  # - name: Terraform Apply
+  #   image: jmccann/drone-terraform:latest
+  #   settings:
+  #     actions:
+  #       - validate
+  #       - plan
+  #       - apply
+  #   environment:
+  #     DIGITALOCEAN_TOKEN:
+  #       from_secret: digitalocean_token 
+  #     HCLOUD_TOKEN:
+  #       from_secret: hcloud_token
+  #     CLOUDFLARE_API_TOKEN:
+  #       from_secret: cloudflare_api_token
+  #   when:
+  #     branch:
+  #     - main
+  #     event:
+  #     - push
+  #     - tag
