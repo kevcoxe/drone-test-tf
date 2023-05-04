@@ -8,5 +8,5 @@ steps:
     settings:
       plan: false
       vars:
-        - tf_backup_infra_state_bucket_name: kevcoxe-test-drone
+        tf_backup_infra_state_bucket_name: kevcoxe-test-drone
       root_dir: terraform
