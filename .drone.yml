@@ -4,7 +4,7 @@ name: default
 
 steps:
   - name: terraform
-    image: jmccann/drone-terraform:1
+    image: jmccann/drone-terraform
     settings:
       plan: false
       vars:
