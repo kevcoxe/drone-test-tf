@@ -1,0 +1,9 @@
+kind: pipeline
+type: docker
+name: default
+
+steps:
+  - name: terraform
+    image: jmccann/drone-terraform:1
+    settings:
+      plan: false
