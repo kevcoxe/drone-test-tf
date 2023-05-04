@@ -16,6 +16,9 @@ steps:
         write: false
         diff: true
         check: true
+    environment:
+      TF_VAR_tf_backup_infra_state_bucket_name:
+        from_secret: S3_BUCKET_NAME
     when:
       event:
       - pull_request
