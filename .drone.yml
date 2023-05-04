@@ -8,7 +8,7 @@ steps:
     settings:
       plan: false
       vars:
-        tf_backup_infra_state_bucket_name: kevcoxe-test-drone
+        - tf_backup_infra_state_bucket_name: kevcoxe-test-drone
       secrets:
         - source: AWS_ACCESS_KEY_ID
           target: aws_access_key_id
