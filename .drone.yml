@@ -10,6 +10,7 @@ steps:
   - name: Terraform FMT PR
     image: jmccann/drone-terraform:latest
     settings:
+      root_dir: terraform
       actions:
         - fmt
       fmt_options:
@@ -29,6 +30,7 @@ steps:
   - name: Terraform Plan
     image: jmccann/drone-terraform:latest
     settings:
+      root_dir: terraform
       actions:
         - validate
         - plan
@@ -47,6 +49,7 @@ steps:
   - name: Terraform FMT
     image: jmccann/drone-terraform:latest
     settings:
+      root_dir: terraform
       actions:
         - fmt
       fmt_options:
@@ -69,6 +72,7 @@ steps:
   - name: Terraform Apply
     image: jmccann/drone-terraform:latest
     settings:
+      root_dir: terraform
       actions:
         - validate
         - plan
