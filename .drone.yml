@@ -44,39 +44,46 @@ steps:
       event:
       - pull_request
 
-  # - name: Terraform FMT
-  #   image: jmccann/drone-terraform:latest
-  #   settings:
-  #     actions:
-  #       - fmt
-  #     fmt_options:
-  #       write: false
-  #       diff: true
-  #       check: true
-  #   when:
-  #     branch:
-  #     - main
-  #     event:
-  #     - push
-  #     - tag
+  - name: Terraform FMT
+    image: jmccann/drone-terraform:latest
+    settings:
+      actions:
+        - fmt
+      fmt_options:
+        write: false
+        diff: true
+        check: true
+    environment:
+      AWS_ACCESS_KEY_ID:
+        from_secret: AWS_ACCESS_KEY_ID
+      AWS_SECRET_ACCESS_KEY:
+        from_secret: AWS_SECRET_ACCESS_KEY_ID
+      AWS_DEFAULT_REGION: "us-east-1"
+    when:
+      branch:
+      - main
+      event:
+      - push
+      - tag
 
-  # - name: Terraform Apply
-  #   image: jmccann/drone-terraform:latest
-  #   settings:
-  #     actions:
-  #       - validate
-  #       - plan
-  #       - apply
-  #   environment:
-  #     DIGITALOCEAN_TOKEN:
-  #       from_secret: digitalocean_token 
-  #     HCLOUD_TOKEN:
-  #       from_secret: hcloud_token
-  #     CLOUDFLARE_API_TOKEN:
-  #       from_secret: cloudflare_api_token
-  #   when:
-  #     branch:
-  #     - main
-  #     event:
-  #     - push
-  #     - tag
+  - name: Terraform Apply
+    image: jmccann/drone-terraform:latest
+    settings:
+      actions:
+        - validate
+        - plan
+        - apply
+    environment:
+      AWS_ACCESS_KEY_ID:
+        from_secret: AWS_ACCESS_KEY_ID
+      AWS_SECRET_ACCESS_KEY:
+        from_secret: AWS_SECRET_ACCESS_KEY_ID
+      AWS_DEFAULT_REGION: "us-east-1"
+      TF_VAR_tf_backup_infra_state_bucket_name:
+        from_secret: S3_BUCKET_NAME
+    when:
+      branch:
+      - main
+      event:
+      - push
+      - tag
