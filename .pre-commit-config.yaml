@@ -4,7 +4,7 @@ repos:
   hooks:
     - id: terraform_fmt
       args:
-        # - --args=-no-color
+        - --args=-no-color
         - --args=-diff
         - --args=-write=true
     - id: terraform_docs
