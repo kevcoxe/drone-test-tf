@@ -7,3 +7,12 @@ steps:
     image: jmccann/drone-terraform:1
     settings:
       plan: false
+      vars:
+        tf_backup_infra_state_bucket_name:
+          from_secret: S3_BUCKET_NAME
+      secrets:
+        - source: AWS_ACCESS_KEY_ID
+          target: aws_access_key_id
+        - source: AWS_SECRET_ACCESS_KEY_ID
+          target: aws_secret_access_key
+      root_dir: terraform
